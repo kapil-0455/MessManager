@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Mess Mate</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <h1>🍴 Mess Mate Dashboard</h1>
+        <span id="userWelcome">Welcome!</span>
+      </div>
+      <div class="header-right">
+        <span id="userInfo"></span>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="dashboard-nav">
+      <div class="nav-item active" data-tab="menu">📋 Menu</div>
+      <div class="nav-item" data-tab="orders">🛒 Orders</div>
+      <div class="nav-item" data-tab="messpass">💳 Mess Pass</div>
+      <div class="nav-item" data-tab="payments">💰 Payments</div>
+      <div class="nav-item admin-only" data-tab="users">👥 Users</div>
+      <div class="nav-item admin-only" data-tab="analytics">📊 Analytics</div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="dashboard-content">
+      <!-- Menu Tab -->
+      <div class="tab-content active" id="menu-tab">
+        <h2>Today's Menu</h2>
+        <div class="meal-types">
+          <button class="meal-btn active" data-meal="BREAKFAST">🌅 Breakfast</button>
+          <button class="meal-btn" data-meal="LUNCH">🌞 Lunch</button>
+          <button class="meal-btn" data-meal="SNACKS">🍿 Snacks</button>
+          <button class="meal-btn" data-meal="DINNER">🌙 Dinner</button>
+        </div>
+        <div class="menu-items" id="menuItems">
+          <!-- Menu items will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div class="tab-content" id="orders-tab">
+        <h2>My Orders</h2>
+        <div class="order-actions">
+          <button id="newOrderBtn" class="action-btn">+ New Order</button>
+        </div>
+        <div class="orders-list" id="ordersList">
+          <!-- Orders will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Mess Pass Tab -->
+      <div class="tab-content" id="messpass-tab">
+        <h2>Digital Mess Pass</h2>
+        <div class="messpass-info" id="messpassInfo">
+          <!-- Mess pass info will be loaded here -->
+        </div>
+        <div class="messpass-actions">
+          <button id="rechargeBtn" class="action-btn">💰 Recharge Pass</button>
+          <button id="createPassBtn" class="action-btn" style="display: none;">🆕 Create Pass</button>
+        </div>
+      </div>
+
+      <!-- Payments Tab -->
+      <div class="tab-content" id="payments-tab">
+        <h2>Payment History</h2>
+        <div class="payments-list" id="paymentsList">
+          <!-- Payments will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Users Tab (Admin Only) -->
+      <div class="tab-content" id="users-tab">
+        <h2>User Management</h2>
+        <div class="users-list" id="usersList">
+          <!-- Users will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Analytics Tab (Admin Only) -->
+      <div class="tab-content" id="analytics-tab">
+        <h2>Analytics Dashboard</h2>
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <h3>Total Users</h3>
+            <span id="totalUsers">0</span>
+          </div>
+          <div class="stat-card">
+            <h3>Today's Orders</h3>
+            <span id="todayOrders">0</span>
+          </div>
+          <div class="stat-card">
+            <h3>Revenue</h3>
+            <span id="totalRevenue">₹0</span>
+          </div>
+          <div class="stat-card">
+            <h3>Active Passes</h3>
+            <span id="activePasses">0</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Order Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Create New Order</h2>
+      <form id="orderForm">
+        <div class="form-group">
+          <label>Meal Type:</label>
+          <select id="orderMealType" required>
+            <option value="BREAKFAST">Breakfast</option>
+            <option value="LUNCH">Lunch</option>
+            <option value="SNACKS">Snacks</option>
+            <option value="DINNER">Dinner</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Items:</label>
+          <div id="orderMenuItems" class="menu-selection">
+            <!-- Menu items for selection will be loaded here -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Special Instructions:</label>
+          <textarea id="orderInstructions" placeholder="Any special requests..."></textarea>
+        </div>
+        <div class="form-group">
+          <strong>Total: ₹<span id="orderTotal">0</span></strong>
+        </div>
+        <button type="submit" class="submit-btn">Place Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recharge Modal -->
+  <div id="rechargeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Recharge Mess Pass</h2>
+      <form id="rechargeForm">
+        <div class="form-group">
+          <label>Amount (₹):</label>
+          <input type="number" id="rechargeAmount" min="10" max="5000" required>
+        </div>
+        <div class="quick-amounts">
+          <button type="button" class="amount-btn" data-amount="100">₹100</button>
+          <button type="button" class="amount-btn" data-amount="250">₹250</button>
+          <button type="button" class="amount-btn" data-amount="500">₹500</button>
+          <button type="button" class="amount-btn" data-amount="1000">₹1000</button>
+        </div>
+        <button type="submit" class="submit-btn">Recharge Now</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
